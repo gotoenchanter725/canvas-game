@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>Connect Four Documentation</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<style type="text/css" media="screen">
+		p, table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+	</style>
+    <link rel="stylesheet" href="assets/blueprint-css/prettify.css">
+	<script src="assets/js/prettify.js" defer></script>
+    <script>
+	window.onload = (function(){ prettyPrint(); });
+	</script>
+</head>
+
+
+<body>
+	<div class="container">
+	
+		<h3 class="center alt">&ldquo;Connect Four&rdquo; Documentation by &ldquo;demonisblack&rdquo; v1.5</h3>
+		
+		<hr>
+		
+		<h1 class="center">&ldquo;Connect Four&rdquo;</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 02/27/2022<br>
+					By: demonisblack<br>
+					Email: <a href="mailto:demonisblack@gmail.com">demonisblack@gmail.com</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing the game. If you have any questions that are beyond the scope of this help file, please feel free to email via profile page contact form <a href="https://codecanyon.net/user/demonisblack">here</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+        	<li><a href="#introduction">Introduction</a></li>
+            <li><a href="#gettingStarted">Getting Started</a></li>
+            <li><a href="#htmlStructure">HTML Structure</a></li>
+			<li><a href="#cssFiles">CSS Files and Structure</a></li>
+			<li><a href="#javascript">JavaScript</a></li>
+            <li><a href="#gameFunctions">Game Functions</a></li>
+            <li><a href="#gameAssets">Game Assets</a></li>
+            <li><a href="#compatibility">Compatibility</a></li>
+			<li><a href="#credits">Sources and Credits</a></li>
+            <li><a href="#changelog">Changelog</a></li>
+            <li><a href="#support">Support Policy</a></li>
+		</ol>
+		
+		<hr>
+        
+        <h3 id="introduction"><strong>A) Introduction</strong> - <a href="#toc">top</a></h3>
+        <p>Connect Four is a HTML5 game where 2 player game in which the objective is to connect four of coloured disks by dropping them into the holder, play against computer or against a friend. Challenge yourself from a traditional 7 X 6 grid, or custom board size from 7 x 6 to 9 x 8.</p>
+        
+        <p>The ZIP package contains the game with 1280×768 and 768×1024 resolution that scales proportionally to fit current screen device.</p>
+
+        <img src="assets/images/feature1.jpg" />
+        <img src="assets/images/feature2.jpg" />
+        <img src="assets/images/feature3.jpg" />
+        
+        <hr>
+        
+        <h3 id="gettingStarted"><strong>B) Getting Started</strong> - <a href="#toc">top</a></h3>
+		<p>To install the game just upload folder 'game' to your server. The game won't run locally with some browser like Chrome due to some security mode.</p>        
+        <p>You need a website that runs PHP to make facebook share button work, and make sure to change Facebook Open Graph meta and Twitter meta in index.html, just replace [GAME_URL] to your game URL.</p>
+        <pre class="prettyprint linenums">
+        &lt;!-- for Facebook --&gt;
+        &lt;meta property=&quot;og:image&quot; content=&quot;[GAME_URL]/share.jpg&quot; /&gt;
+        &lt;meta property=&quot;og:url&quot; content=&quot;[GAME_URL]&quot; /&gt;
+        
+        &lt;!-- for Twitter --&gt;
+        &lt;meta name=&quot;twitter:image&quot; content=&quot;[GAME_URL]/share.jpg&quot; /&gt;
+        </pre>
+        
+        <p>You can easily customize game text and settings in game.js file
+        <pre class="prettyprint linenums">
+//icons array
+var iconsArr = [
+    {o:'assets/icon_o_1.png', x:'assets/icon_x_1.png'},
+    {o:'assets/icon_o_2.png', x:'assets/icon_x_2.png'},
+    {o:'assets/icon_o_3.png', x:'assets/icon_x_3.png'},
+    {o:'assets/icon_o_4.png', x:'assets/icon_x_4.png'},
+    {o:'assets/icon_o_6.png', x:'assets/icon_x_6.png'},
+    {o:'assets/icon_5.png', x:'assets/icon_5.png'},
+]
+
+//classic settings
+var defaultSettings = {
+    twoPlayer:true,
+    row:6,
+    column:7,
+    connect:4
+};
+
+//custom settings
+var customSettings = {
+    enable:true,
+    twoPlayer:true,
+    rowMin:6,
+    rowMax:8,
+    columnMin:7,
+    columnMax:9,
+    connectMin:4,
+    connectMax:6,
+};
+
+//board settings
+var boardSettings = {
+    radius:35,
+    margin:10,
+    color:'#7661d1',
+    winColor:'#321699',
+    winAlpha:.5,
+    shadowColor:'#2a27a0',
+    shadowOffsetX:0,
+    shadowOffsetY:-10,
+    borderColor:'#28159b',
+    borderStroke:10,
+    borderRadius:20,
+    borderMargin:10,
+    timer:120000
+};
+
+//game text display
+var textDisplay = {
+    customTitle:'Custom Board',
+    customSize:'[COLUMN] x [ROW] size',
+    customWin:'connect [NUMBER]',
+    vs:'VS',
+    player1:'Player 1',
+    player2:'Player 2',
+    computer:'Computer',
+    userTurn:'Your turn',
+    computerTurn:'Computer turn',
+    gameWin:'[NUMBER] win',
+    draw:'Draw',
+    timeUp:'Time\'s Up',
+    exitTitle:'Exit Game',
+    exitMessage:'Are you sure you want\nto quit game?',
+    share:'Share your score:',
+    resultTitle:'Game Over',
+    resultDesc:'you won [NUMBER] round',
+}
+
+//Social share, [SCORE] will replace with game score
+var shareEnable = true; //toggle share
+var shareTitle = 'Highscore on Connect Four is [SCORE]pts';//social share score title
+var shareMessage = '[SCORE]pts is mine new highscore on Connect Four game! Try it now!'; //social share score message
+        </pre>
+        </p>
+	
+        <p>
+        The sound can be easily disabled to avoid compatibility issues in sound.js file:
+        <pre class="prettyprint linenums">
+        var enableMobileSound = true;
+        </pre>
+        </p>
+
+        <hr>
+		
+		<h3 id="htmlStructure"><strong>C) HTML Structure</strong> - <a href="#toc">top</a></h3>
+        <p>The page start with the loader wrapper that covering the whole screen in the body. It shows loader progress when calls the function <strong>initPreload()</strong></p>
+        <pre class="prettyprint linenums">
+        &lt;!-- PERCENT LOADER START--&gt;
+    	&#x3C;div id=&#x22;mainLoader&#x22;&#x3E;&#x3C;img src=&#x22;assets/loader.png&#x22; /&#x3E;&#x3C;br&#x3E;&#x3C;span&#x3E;0&#x3C;/span&#x3E;&#x3C;/div&#x3E;
+        &lt;!-- PERCENT LOADER END--&gt;
+        </pre>
+        
+        <p>This section is for browser not support page when calls the function <strong>checkBrowser()</strong>. It shows error message when detect the browser does not support canvas.</p>
+        <pre class="prettyprint linenums">
+        &lt;!-- BROWSER NOT SUPPORT START--&gt;
+        &lt;div id=&quot;notSupportHolder&quot;&gt;
+            &lt;div class=&quot;notSupport&quot;&gt;YOUR BROWSER ISN&#39;T SUPPORTED.&lt;br/&gt;PLEASE UPDATE YOUR BROWSER IN ORDER TO RUN THE GAME&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- BROWSER NOT SUPPORT END--&gt;
+        </pre>
+        
+        <p>Follow by one canvas tag in the body. The game start initiatie by calls the main function of the game <strong>initMain()</strong>.</p>
+        <pre class="prettyprint linenums">
+        &lt;!-- CANVAS START--&gt;
+        &lt;div id=&quot;canvasHolder&quot;&gt;
+            &lt;canvas id=&quot;gameCanvas&quot; width=&quot;1280&quot; height=&quot;768&quot;&gt;&lt;/canvas&gt;
+        &lt;/div&gt;
+        &lt;!-- CANVAS END--&gt;
+        </pre>
+		<hr>
+
+		<h3 id="cssFiles"><strong>D) CSS Files and Structure</strong> - <a href="#toc">top</a></h3>
+		<p>I'm using two CSS files in this game. The first one is a generic reset file. Many browser interpret the default behavior of html elements differently. By using a general reset CSS file, we can work round this. This file also contains some general styling, such as anchor tag colors, font-sizes, etc. Keep in mind, that these values might be overridden somewhere else in the file.</p>
+		<p>The second file contains all of the specific stylings for the page.</p>
+        <hr>
+		
+        
+		<h3 id="javascript"><strong>E) JavaScript</strong> - <a href="#toc">top</a></h3>
+		
+		<p>This game using Javascript files below.</p>
+		
+		<ol>
+			<li>
+                <strong>jQuery</strong> is a cross-platform JavaScript library designed to simplify the client-side scripting of HTML.<br/><br/>
+            </li>
+            
+            <li>
+                <strong>Detect Mobile Browser</strong> is a open source scripts to detect mobile browsers and phones.<br/><br/>
+            </li>
+            
+            <li>
+                <strong>CreateJs plugin</strong> is a suite of modular libraries and tools which work together to create interactive content on open web technologies via HTML5.<br/><br/>
+            </li>
+            
+            <li>
+                <strong>TweenMax</strong> is an extremely fast, lightweight, and flexible animation tool that serves as the foundation of the GreenSock Animation Platform (GSAP).<br/><br/>
+            </li>
+            
+            <li>
+                <strong>The game have the following js files</strong>
+                <ul>
+                    <li><strong>init.js :</strong> check if browser or device support <br/><br/></li>
+                    <li><strong>loader.js :</strong> loader to load all game images<br/><br/></li>
+                    <li><strong>main.js :</strong> initiate game setup and browser resize function<br/><br/></li>
+                    <li><strong>mobile.js :</strong> mobile orientation change<br/><br/></li>
+                    <li><strong>canvas.js :</strong> canvas setup and resize<br/><br/></li>
+                    <li><strong>sound.js :</strong> sound event<br/><br/></li>
+                    <li><strong>game.js :</strong> game play and logics<br/><br/></li>
+                    <li><strong>plugins.js :</strong> additonal useful plugins<br/><br/></li>
+                </ul>
+            </li>
+		</ol>
+        
+        <p>Complete game flow:</p>
+		<ol>
+        	<li>The index.html file start init.js for browser detection</li>
+            <li>If browser is supported, init loader.js to start load asserts with loading progress</li>
+            <li>For mobile the rotate instruction shows when device is in portrait view, detect by mobile.js</li>
+            <li>When all asserts contained in "/assets" folder are loaded, the game start construct canvas.js from main.js thats shows game menu</li>
+            <li>If user click classic or custom button in game menu, one or two player button will show</li>
+            <li>If user click classic mode, the game will start with game.js</li>
+            <li>If user click custom mode, the custom menu will show</li>
+            <li>From player screen, user can choose different icons and switch side</li>
+            <li>If user connect four of coloured disks (horizontal, vertical, or diagonal), user will score.</li>
+            <li>If time is up, game result will shows</li>
+            <li>If user click the main button in game result, it will restart the game</li>
+        </ol>
+		
+		<hr>
+        
+        <h3 id="gameFunctions"><strong>F) Game Functions</strong> - <a href="#toc">top</a></h3>
+		
+		<p>The most important functions used for page.</p>
+        <ul>
+        	<li>
+                <strong>checkBrowser()</strong><br/>
+                This function is runs for browser detection<br/><br/>
+            </li>
+            
+            <li>
+                <strong>checkMobileEvent()</strong><br/>
+                This function runs for mobile event<br/><br/>
+            </li>
+        </ul>
+        
+        <p>The most important functions used for game.</p>
+        <ul>
+        	<li>
+                <strong>initMain()</strong><br/>
+                This function build canvas<br/><br/>
+            </li>
+            
+            <li>
+                <strong>startGame()</strong><br/>
+                This function start gameplay<br/><br/>
+            </li>
+            
+            <li>
+                <strong>stopGame()</strong><br/>
+                This function stop gameplay<br/><br/>
+            </li>
+
+            <li>
+                <strong>saveGame()</strong><br>
+                This function save game score<br><br>
+            </li>
+        </ul>
+		<hr>
+        
+        <h3 id="gameAssets"><strong>G) Game Assets</strong> - <a href="#toc">top</a></h3>
+        <p>The game contain 'design' folder which include following:
+        <ol>
+        	<li>connectfour_1280x768.psd - with layer folders below
+                <ul>
+                <li>Option</li>
+                <li>Result</li>
+                <li>Gameplay</li>
+                <li>Landing</li>
+                </ul>
+        	</li>
+        </ol>
+        </p>
+
+        <p>The folder 'assets' in 'game' folder contains all the images of the game that can be replaced. Is better to have the same size of the old ones if you want to reskin the game graphic without coding.</p>
+		<hr>
+        
+        <h3 id="compatibility"><strong>H) Compatibility</strong> - <a href="#top">top</a></h3>
+		
+		<p>This game is build for Desktop browsers that support HTML5 canvas. Any mobile/tablet should work in landscape view, but they are not officially supported.</p>
+		<hr>
+		
+		<h3 id="credits"><strong>I) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+		
+		<p>I've used the following font and sound files as listed.</p>
+		
+		<ul>
+			<li><a href="https://www.dafont.com/bpreplay.font" target="_blank">BPreplay</a> from file George Triantafyllakos</li>
+			
+            <li><a href="https://freesound.org/people/180118/sounds/442887/" target="_blank">Chest pieces</a> from file 180118</li>
+            <li><a href="https://freesound.org/people/Lost_Dream/sounds/435997/" target="_blank">Menu Select Sound.wav</a> from file Lost_Dream</li>
+            <li><a href="https://freesound.org/people/newlocknew/sounds/563864/" target="_blank">UI_6 Tonal beep.Aliens.Proximity alert(63osc,chrs,cmpr).wav</a> from file newlocknew</li>
+            <li><a href="https://freesound.org/people/Vicces1212/sounds/123758/" target="_blank">item1.wav</a> from file Vicces1212</li>
+            <li><a href="https://freesound.org/people/melokacool/sounds/616694/" target="_blank">Notification 2.ogg</a> from file melokacool</li>
+            <li><a href="https://freesound.org/people/djm62/sounds/318968/" target="_blank">successarpeggio.flac</a> from file djm62</li>
+            <li><a href="https://freesound.org/people/Tissman/sounds/521848/" target="_blank">alert1 : (no distortion)</a> from file Tissman</li>
+		</ul>
+		
+		<hr>
+        
+        <h3 id="changelog"><strong>J) Changelog</strong> - <a href="#toc">top</a></h3>
+
+        Version 1.5
+        <ul>
+        	<li>Fixed fullscreen issue</li>
+		</ul>
+
+        Version 1.4
+        <ul>
+        	<li>Fixed multiplayer issue</li>
+		</ul>
+
+        Version 1.3
+        <ul>
+        	<li>Compatible with Multiplayer add-on</li>
+		</ul>
+
+        Version 1.2		
+		<ul>
+			<li>Fixed scoreboard issue</li>
+		</ul>
+
+        Version 1.1		
+		<ul>
+			<li>Option for two player</li>
+			<li>Added new icon</li>
+		</ul>
+		
+		<hr>
+		
+		<h3 id="support"><strong>K) Support Policy</strong> - <a href="#toc">top</a></h3>
+
+		<p>Check out support policy <a href="http://demonisblack.com/code/support-policy/">here</a>.</p>
+
+        <strong>Wordpress Site</strong><br/>
+        <p>
+            By using Scoreboard for HTML5 Games plugin, you can embed HTML5 game into WordPress post or page.<br>
+            <a href="https://wordpress.org/plugins/scoreboard-for-html5-game-lite/" target="_blank">> Plugin</a>
+        </p>
+
+        <strong>Ad Placeholder</strong><br/>
+        <p>
+            Help simulate ads on HTML5 Games, you can integrate and display static and takeover ads through different Ads Serving Platform.<br>
+            <a href="https://demonisblack.com/code/ads/" target="_blank">> Documentation</a>
+        </p>
+
+        <strong>Instant Games – Facebook</strong><br/>
+        <p>
+            Guide you through integrating Facebook Instant Games API in our HTML5 Games.<br>
+            <a href="https://demonisblack.com/code/instantgames/" target="_blank">> Documentation</a>
+        </p>
+		<hr>
+		
+		<p>Once again, thank you so much for purchasing this game, if you have a more general question relating to the games on CodeCanyon, you might consider visiting the item page in the <a href="https://codecanyon.net/item/connect-four-html5-game/36427357/support">"Support"</a> section.</p>
+		<p>If you like the game, please take a moment to rate it. Thanks!   <img src="assets/images/rate.png" /><img src="assets/images/rate.png" /><img src="assets/images/rate.png" /><img src="assets/images/rate.png" /><img src="assets/images/rate.png" /></p>
+        
+        <p>
+        	<h3>How to rate an item on CodeCanyon?</h3>
+            If you want to rate one of our items on CodeCanyon please do it like this:
+            <ol>
+                <li>Login to CodeCanyon</li>
+                <li>Open the menu on the top right, and click onto the link “Downloads” which shows a list of your downloads</li>
+                <li>Rate our items using the stars</li>
+                <li>That’s it. Thank you very much!</li>
+            </ol>
+        </p>
+		
+		<p class="append-bottom alt large"><strong>demonisblack</strong></p>
+		<p><a href="#toc">Go To Table of Contents</a></p>
+		
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>

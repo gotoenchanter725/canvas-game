@@ -1,0 +1,1 @@
+Follow the documentation on how to install the game!
